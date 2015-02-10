@@ -12,7 +12,7 @@ Discovery:
 * determines the proximity of the peer device
                    DESC
 
-  s.homepage     = "https://github.com/omergul123/Discovery”
+  s.homepage     = "https://github.com/omergul123/Discovery"
   s.license      = { :type => 'APACHE', :file => 'LICENSE' }
   s.author       = { "Ömer Faruk Gül" => "omer.gul@louvredigital.com" }
   s.platform     = :ios,'7.0'
