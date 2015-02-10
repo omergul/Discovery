@@ -1,0 +1,16 @@
+PODS:
+  - EDColor (0.4.0)
+  - Masonry (0.6.1)
+  - ViewUtils (1.1.2)
+
+DEPENDENCIES:
+  - EDColor (~> 0.4)
+  - Masonry (~> 0.6)
+  - ViewUtils (~> 1.1)
+
+SPEC CHECKSUMS:
+  EDColor: bcdb8600b7a456f4408ce1d7e7fc001588919254
+  Masonry: 2cb49fd14d203d2db5ca6bb017135b235dde9980
+  ViewUtils: 11aaceb3b215b3d051c2f00ae143133a71095365
+
+COCOAPODS: 0.34.4
