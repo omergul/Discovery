@@ -1,6 +1,6 @@
 # Discovery: A simple library to discover and retrieve data from nearby devices.
 
-![Screenshot](https://raw.githubusercontent.com/omergul123/LLSimpleCamera/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/omergul123/Discovery/master/screenshot.png)
 
 Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of wheather the app on peer device works at foregorund or background state.
 
