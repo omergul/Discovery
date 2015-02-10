@@ -2,7 +2,7 @@
 
 ![Screenshot](https://raw.githubusercontent.com/omergul123/Discovery/master/screenshot.png)
 
-Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of wheather the app on peer device works at foregorund or background state.
+Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of whether the app on peer device works at foregorund or background state.
 
 
 ###Discovery:###
@@ -46,7 +46,7 @@ If you have dived into the concepts of **BLE** and **iBeacon** you probably know
 
 Thus, directly using BLE functions are more convenient. However we have some problems there too! Basically, the problem here lies again on the state of your app, and exchanging usernames(or any kind of ID) at both foreground and background states. If your app runs on foreground state there is no problem. We can simply attach data which is our username, and when the peer device detects our signal, it will retrieve the username via **CBAdvertisementDataLocalNameKey**. However, iOS trims that information when our app goes into background state. It still continues to advertise, but the data(username) your are trying transmit can not be read by other peers. So we need some other methods to determine who that device belongs to.
 
-Discovery solves this problem by creating some specific characteristics that is binded to the service of the advertiser. When the listener peer discovers our device, it initially checks wheather it can raed the **CBAdvertisementDataLocalNameKey** value. If it can, there is no problem, the device is identified. If it **can not read** (which means our app is at background state) it attempts to connect and discover our services. After the connection is successful, the peer device goes through our services and it reads our characteristics, and there, it retrieves our username - voilà! - and then simply disconnects.
+Discovery solves this problem by creating some specific characteristics that is binded to the service of the advertiser. When the listener peer discovers our device, it initially checks whether it can raed the **CBAdvertisementDataLocalNameKey** value. If it can, there is no problem, the device is identified. If it **can not read** (which means our app is at background state) it attempts to connect and discover our services. After the connection is successful, the peer device goes through our services and it reads our characteristics, and there, it retrieves our username - voilà! - and then simply disconnects.
 
 ## What's is next? ##
 
