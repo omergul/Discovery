@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "WelcomeViewController.h"
+#import "RegisterViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +19,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    WelcomeViewController *welcomeVC = [[WelcomeViewController alloc] initWithNibName:nil bundle:nil];
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:welcomeVC];
+    RegisterViewController *vc = [[RegisterViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
     
     self.window.rootViewController = navVC;
     [self.window makeKeyAndVisible];

@@ -36,7 +36,8 @@
 {
     [super viewDidLoad];
 	
-    [self addGradientBgLayer:@[[UIColor colorWithHexString:@"1B78F4"], [UIColor colorWithHexString:@"25BAFB"]]];
+    [self addGradientBgLayer:@[[UIColor colorWithHexString:@"50BBE6"], [UIColor colorWithHexString:@"EDD7F1"]]];
+    
     self.navigationItem.title = @"Nearby People";
     
     self.users = [NSArray array];
@@ -48,7 +49,15 @@
     self.tableView.rowHeight = 55;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorColor = [UIColor whiteColor];
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([self.tableView respondsToSelector:@selector(layoutMargins)]) {
+        self.tableView.layoutMargins = UIEdgeInsetsZero;
+    }
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(superview);
@@ -63,7 +72,7 @@
     // start Discovery
     self.discovery = [[Discovery alloc] initWithUUID:uuid username:self.username usersBlock:^(NSArray *users, BOOL usersChanged) {
         
-        NSLog(@"Updating table view with users count : %d", users.count);
+        NSLog(@"Updating table view with users count : %lu", (unsigned long)users.count);
         weakSelf.users = users;
         [weakSelf.tableView reloadData];
     }];
@@ -110,15 +119,24 @@
     
     UIColor *bgColor;
     
-    if (proximity < 0)
-        bgColor = [UIColor greenColor];
+    
+    if (proximity < -85)
+        // red
+        bgColor = [UIColor colorWithHexString:@"ED4A5E"];
     else if (proximity < -65)
-        bgColor = [UIColor yellowColor];
+        // yellow
+        bgColor = [UIColor colorWithHexString:@"F6EC6E"];
     else
-        bgColor = [UIColor redColor];
+        // green
+        bgColor = [UIColor colorWithHexString:@"B8E986"];
+        
+    
+    if ([cell respondsToSelector:@selector(layoutMargins)]) {
+        cell.layoutMargins = UIEdgeInsetsZero;
+    }
     
     cell.backgroundColor = bgColor;
-    cell.contentView.backgroundColor = bgColor;
+    cell.contentView.backgroundColor = [UIColor clearColor];
     
     return cell;
 }

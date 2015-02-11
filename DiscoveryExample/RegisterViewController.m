@@ -33,27 +33,34 @@
 
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
-                             forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Regular" size:22.0f]}];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    self.navigationItem.title = @"Discovery";
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStyleDone target:nil action:nil];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = backButton;
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next"
+                                                                   style:UIBarButtonItemStyleDone
+                                                                  target:self
+                                                                  action:@selector(registerButtonPressed)];
+    [buttonItem setTitleTextAttributes:@{
+                                         NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-DemiBold" size:16.0f],
+                                         NSForegroundColorAttributeName: [UIColor whiteColor]
+                                         } forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = buttonItem;
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    
-    self.navigationItem.title = @"Register";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next"
-                                                                              style:UIBarButtonItemStyleDone
-                                                                             target:self
-                                                                             action:@selector(registerButtonPressed)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self addGradientBgLayer:@[[UIColor colorWithHexString:@"1B78F4"], [UIColor colorWithHexString:@"25BAFB"]]];
+    [self addGradientBgLayer:@[[UIColor colorWithHexString:@"50BBE6"], [UIColor colorWithHexString:@"EDD7F1"]]];
     
+    
+    // start creating views
     UIView *superview = self.view;
 
     // scrollview
@@ -68,10 +75,11 @@
     self.usernameField = [LLControl textfild:@"Username"];
     self.usernameField.frame = CGRectMake(0, 0, 100, 100);
     self.usernameField.delegate = self;
-    self.usernameField.returnKeyType = UIReturnKeyNext;
+    self.usernameField.returnKeyType = UIReturnKeyGo;
     self.usernameField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.usernameField.tag = 12;
     self.usernameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.usernameField.keyboardAppearance = UIKeyboardAppearanceDark;
     [self.scrollView addSubview:self.usernameField];
     
     [self.usernameField mas_makeConstraints:^(MASConstraintMaker *make) {
