@@ -168,8 +168,7 @@
                                                                                           ascending:NO], nil]];
     
     if(self.usersBlock) {
-        NSArray *usersArr = [NSArray arrayWithArray:users];
-        self.usersBlock(usersArr, usersChanged);
+        self.usersBlock(users, usersChanged);
     }
 }
 

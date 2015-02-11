@@ -13,7 +13,6 @@
 		17B568911A87864B007E0C5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17B568901A87864B007E0C5F /* Images.xcassets */; };
 		17B568941A87864B007E0C5F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17B568921A87864B007E0C5F /* LaunchScreen.xib */; };
 		17B568A01A87864B007E0C5F /* DiscoveryExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B5689F1A87864B007E0C5F /* DiscoveryExampleTests.m */; };
-		17B568B01A878877007E0C5F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B568AF1A878877007E0C5F /* WelcomeViewController.m */; };
 		17C70CB91A878EBD00723200 /* LLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C70CB41A878EBD00723200 /* LLUtility.m */; };
 		17C70CBA1A878EBD00723200 /* PlainTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C70CB61A878EBD00723200 /* PlainTextField.m */; };
 		17C70CBB1A878EBD00723200 /* LLControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C70CB81A878EBD00723200 /* LLControl.m */; };
@@ -48,8 +47,6 @@
 		17B568991A87864B007E0C5F /* DiscoveryExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiscoveryExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17B5689E1A87864B007E0C5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17B5689F1A87864B007E0C5F /* DiscoveryExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoveryExampleTests.m; sourceTree = "<group>"; };
-		17B568AE1A878877007E0C5F /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
-		17B568AF1A878877007E0C5F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		17C70CB31A878EBD00723200 /* LLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUtility.h; sourceTree = "<group>"; };
 		17C70CB41A878EBD00723200 /* LLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLUtility.m; sourceTree = "<group>"; };
 		17C70CB51A878EBD00723200 /* PlainTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlainTextField.h; sourceTree = "<group>"; };
@@ -158,8 +155,6 @@
 				17C70CCE1A87918300723200 /* UserListViewController.m */,
 				17C70CBC1A878FF500723200 /* RegisterViewController.h */,
 				17C70CBD1A878FF500723200 /* RegisterViewController.m */,
-				17B568AE1A878877007E0C5F /* WelcomeViewController.h */,
-				17B568AF1A878877007E0C5F /* WelcomeViewController.m */,
 				17C70CE11A8811A000723200 /* BaseViewController.h */,
 				17C70CE21A8811A000723200 /* BaseViewController.m */,
 			);
@@ -260,6 +255,7 @@
 				TargetAttributes = {
 					17B5687F1A87864B007E0C5F = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = NZPAC7Q696;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -350,7 +346,6 @@
 			files = (
 				17C70CBA1A878EBD00723200 /* PlainTextField.m in Sources */,
 				17C70CCF1A87918300723200 /* UserListViewController.m in Sources */,
-				17B568B01A878877007E0C5F /* WelcomeViewController.m in Sources */,
 				17B568891A87864B007E0C5F /* AppDelegate.m in Sources */,
 				17B568861A87864B007E0C5F /* main.m in Sources */,
 				17C70CE01A88118000723200 /* Discovery.m in Sources */,

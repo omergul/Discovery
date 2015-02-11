@@ -2,7 +2,7 @@
 
 ![Screenshot](https://raw.githubusercontent.com/omergul123/Discovery/master/screenshot.png)
 
-Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of whether the app on peer device works at foregorund or background state.
+Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of whether the app on peer device works at foreground or background state.
 
 
 ###Discovery:###
@@ -40,21 +40,21 @@ self.discovery = [[Discovery alloc] initWithUUID:uuid username:self.username use
 
 ## The Concept, The Problem, and why we need Discovery?
 
-Let's make clear what we are trying to solve: Our aim is to handle the problem of discovering other devices (that are our running our app too), and exhanging an ID (could be username, name or a numbered id) **even if our app on the peer device runs at background**.
+Let's make clear what we are trying to solve: Our aim is to handle the problem of discovering other devices (that are our running our app too), and exchanging an ID (could be username, name or a numbered id) **even if our app on the peer device runs at background**.
 
-If you have dived into the concepts of **BLE** and **iBeacon** you probably know that iOS has some limitations on how you can harness these features. iBeacons are basically subset of BLE technology. You can program your device to be both advertiser and listener. However it is not possible to advertise as iBeacon when your app runs at background state. Moreover, you can only transmit major and minor values which are also limiting.
+If you have dived into the concepts of **BLE** and **iBeacon** you probably know that iOS has some limitations on how you can harness these features. iBeacons are basically subset of BLE technology. You can program your device to be both an advertiser and a listener. However it is not possible to advertise as iBeacon when your app runs at background state. Moreover, you can only transmit major and minor values which are also limiting.
 
-Thus, directly using BLE functions are more convenient. However we have some problems there too! Basically, the problem here lies again on the state of your app, and exchanging usernames(or any kind of ID) at both foreground and background states. If your app runs on foreground state there is no problem. We can simply attach data which is our username, and when the peer device detects our signal, it will retrieve the username via **CBAdvertisementDataLocalNameKey**. However, iOS trims that information when our app goes into background state. It still continues to advertise, but the data(username) your are trying transmit can not be read by other peers. So we need some other methods to determine who that device belongs to.
+Thus, directly using BLE functions are more convenient. Yet, we have some problems there too! Basically, the problem here lies again on the state of your app, namely, exchanging usernames(or any kind of ID) at both foreground and background states. If your app runs on foreground state, there isn't any problem. We can simply attach data which is our username, and when the peer device detects our signal, it will retrieve the username via **CBAdvertisementDataLocalNameKey**. However, iOS trims that information when our app goes into background state. It still continues to advertise, but the data(username) your are trying transmit can not be read by other peers. So we need some other methods to determine who that device belongs to.
 
-Discovery solves this problem by creating some specific characteristics that is binded to the service of the advertiser. When the listener peer discovers our device, it initially checks whether it can raed the **CBAdvertisementDataLocalNameKey** value. If it can, there is no problem, the device is identified. If it **can not read** (which means our app is at background state) it attempts to connect and discover our services. After the connection is successful, the peer device goes through our services and it reads our characteristics, and there, it retrieves our username - voilà! - and then simply disconnects.
+Discovery solves this problem by creating some specific characteristics that is binded to the service of the advertiser. When the listener peer discovers our device, it initially checks whether it can read the **CBAdvertisementDataLocalNameKey** value. If it can, there is no problem, the device is identified. If it **can't read** (which means our app is at background state) it attempts to connect and discover our services. After the connection is successful, the peer device goes through our services and it reads our characteristics, and there it retrieves our username - voilà! Then, simply disconnects.
 
-## What's is next? ##
+## What's next? ##
 
-I wanted to keep Discovery as simple as possbile for the initial release. In the next release I will probably add some reliable error handling and some callbacks for the developer to interfere whenever necessary. And maybe some time later, I could add some extra features for peers to persistently connect each other and continue exchaning stream of information.
+I wanted to keep Discovery as simple as possible for the initial release. In the next release I will probably add some reliable error handling and some callbacks for the developer to interfere whenever necessary. And maybe some time later, I could add some extra features for peers to persistently connect each other and continue exchanging stream of information.
 
 ## Problematic Cases ##
 
-Have a look at this [question on Stakcoverflow][1]. In my experience, I did't encounter this problem on iOS8, only sometimes on iOS7.
+Have a look at this [question on Stackoverflow][1]. In my experience, I did't encounter this problem on iOS8, only sometimes on iOS7.
 
 ## Contribution
 
