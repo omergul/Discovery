@@ -93,11 +93,11 @@
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification {
-    [self startTimer];
+    [self stopTimer];
 }
 
 - (void)appWillEnterForeground:(NSNotification *)notification {
-    [self stopTimer];
+    [self startTimer];
 }
 
 - (void)startAdvertising {
