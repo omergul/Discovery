@@ -93,11 +93,11 @@
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification {
-    [self startTimer];
+    [self stopTimer];
 }
 
 - (void)appWillEnterForeground:(NSNotification *)notification {
-    [self stopTimer];
+    [self startTimer];
 }
 
 - (void)startAdvertising {
@@ -159,8 +159,20 @@
 }
 
 - (void)updateList:(BOOL)usersChanged {
-    // sort
-    NSMutableArray *users = [[[self usersMap] allValues] mutableCopy];
+    
+    NSMutableArray *users;
+    
+    @synchronized(self.usersMap) {
+        users = [[[self usersMap] allValues] mutableCopy];
+    }
+    
+    // remove unidentified users
+    NSMutableArray *discardedItems = [NSMutableArray array];
+    for (BLEUser *user in users) {
+        if (!user.isIdentified)
+            [discardedItems addObject:user];
+    }
+    [users removeObjectsInArray:discardedItems];
     
     // we sort the list according to "proximity".
     // so the client will receive ordered users according to the proximity.
@@ -168,7 +180,7 @@
                                                                                           ascending:NO], nil]];
     
     if(self.usersBlock) {
-        self.usersBlock(users, usersChanged);
+        self.usersBlock([users mutableCopy], usersChanged);
     }
 }
 
@@ -176,7 +188,7 @@
     
     double currentTime = [[NSDate date] timeIntervalSince1970];
     
-    BOOL isRemovedUser = NO;
+    NSMutableArray *discardedKeys = [NSMutableArray array];
     
     for (NSString* key in self.usersMap) {
         BLEUser *bleUser = [self.usersMap objectForKey:key];
@@ -186,13 +198,13 @@
         // We remove the user if we haven't seen him for the userTimeInterval amount of seconds.
         // You can simply set the userTimeInterval variable anything you want.
         if(diff > self.userTimeoutInterval) {
-            isRemovedUser = YES;
-            [self.usersMap removeObjectForKey:key];
+            [discardedKeys addObject:key];
         }
     }
     
     // update the list if we removed a user.
-    if(isRemovedUser) {
+    if(discardedKeys.count > 0) {
+        [self.usersMap removeObjectsForKeys:discardedKeys];
         [self updateList];
     }
     else {
