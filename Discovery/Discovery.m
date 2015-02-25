@@ -87,6 +87,26 @@
     _shouldAdvertise = shouldAdvertise;
     
     if(shouldAdvertise) {
+        if (!self.peripheralManager)
+            self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.queue];
+    } else {
+        if (self.peripheralManager) {
+            [self.peripheralManager stopAdvertising];
+            self.peripheralManager.delegate = nil;
+            self.peripheralManager = nil;
+        }
+    }
+    
+    
+}
+
+-(void)setShouldDiscover:(BOOL)shouldDiscover {
+    if(_shouldDiscover == shouldDiscover)
+        return;
+    
+    _shouldDiscover = shouldDiscover;
+    
+    if(shouldDiscover) {
         if (!self.centralManager)
             self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:self.queue];
         if (!self.timer)
@@ -99,24 +119,6 @@
         }
         if (self.timer)
             [self stopTimer];
-    }
-}
-
--(void)setShouldDiscover:(BOOL)shouldDiscover {
-    if(_shouldDiscover == shouldDiscover)
-        return;
-    
-    _shouldDiscover = shouldDiscover;
-    
-    if(shouldDiscover) {
-        if (!self.peripheralManager)
-            self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.queue];
-    } else {
-        if (self.peripheralManager) {
-            [self.peripheralManager stopAdvertising];
-            self.peripheralManager.delegate = nil;
-            self.peripheralManager = nil;
-        }
     }
 }
 
