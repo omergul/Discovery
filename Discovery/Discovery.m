@@ -11,8 +11,6 @@
 @interface Discovery()
 @property (nonatomic, copy) void (^usersBlock)(NSArray *users, BOOL usersChanged);
 @property (strong, nonatomic) NSTimer *timer;
-@property (nonatomic) BOOL shouldAdvertise;
-@property (nonatomic) BOOL shouldDetect;
 @end
 
 @implementation Discovery
@@ -54,18 +52,18 @@
         self.queue = dispatch_queue_create("com.omerfarukgul.discovery", DISPATCH_QUEUE_SERIAL);
         
         _shouldAdvertise = NO;
-        _shouldDetect = NO;
+        _shouldDiscover = NO;
         
         switch (startOption) {
             case DIStartAdvertisingAndDetecting:
                 self.shouldAdvertise = YES;
-                self.shouldDetect = YES;
+                self.shouldDiscover = YES;
                 break;
             case DIStartAdvertisingOnly:
                 self.shouldAdvertise = YES;
                 break;
             case DIStartDetectingOnly:
-                self.shouldDetect = YES;
+                self.shouldDiscover = YES;
                 break;
             case DIStartNone:
             default:
@@ -99,11 +97,11 @@
     }
 }
 
--(void)setShouldDetect:(BOOL)shouldDetect {
-    if(_shouldDetect == shouldDetect)
+-(void)setShouldDiscover:(BOOL)shouldDetect {
+    if(_shouldDiscover == shouldDetect)
         return;
     
-    _shouldDetect = shouldDetect;
+    _shouldDiscover = shouldDetect;
     
     if(shouldDetect) {
         if (!self.peripheralManager)

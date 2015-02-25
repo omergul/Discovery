@@ -49,6 +49,12 @@ typedef NS_ENUM(NSInteger, DIStartOptions) {
 - (BLEUser *)userWithPeripheralId:(NSString *)peripheralId;
 
 /**
+ * Changing these properties will start/stop advertising/discovery
+ */
+@property (nonatomic) BOOL shouldAdvertise;
+@property (nonatomic) BOOL shouldDiscover;
+
+/**
  * UUID is used for id as advertisement, peripheral services and characteristics.
  * It should be unique to you app, not to your device. Otherwise the peers won't be able to discover each other.
  */
