@@ -97,13 +97,13 @@
     }
 }
 
--(void)setShouldDiscover:(BOOL)shouldDetect {
-    if(_shouldDiscover == shouldDetect)
+-(void)setShouldDiscover:(BOOL)shouldDiscover {
+    if(_shouldDiscover == shouldDiscover)
         return;
     
-    _shouldDiscover = shouldDetect;
+    _shouldDiscover = shouldDiscover;
     
-    if(shouldDetect) {
+    if(shouldDiscover) {
         if (!self.peripheralManager)
             self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.queue];
     } else {
