@@ -12,12 +12,32 @@
 #import <CoreLocation/CoreLocation.h>
 #import "BLEUser.h"
 
+/** Start options */
+typedef NS_ENUM(NSInteger, DIStartOptions) {
+    DIStartAdvertisingAndDetecting = 0,
+    DIStartAdvertisingOnly,
+    DIStartDetectingOnly,
+    DIStartNone
+};
+
 @interface Discovery : NSObject<CBCentralManagerDelegate, CBPeripheralManagerDelegate, CBPeripheralDelegate>
 
 
 /**
  * Initialize the Discovery object with a UUID specific to your app, and a username specific to your device.
- * The usersBlock is triggered periodically in order of users' proximity. It
+ * The usersBlock is triggered periodically in order of users' proximity.
+ * The startOptions determine if the beacon should start advertising, broadcasting, both, or none.
+ */
+- (instancetype)initWithUUID:(CBUUID *)uuid
+                    username:(NSString *)username
+                startOption:(DIStartOptions)startOption
+                  usersBlock:(void (^)(NSArray *users, BOOL usersChanged))usersBlock;
+
+
+/**
+ * Initialize the Discovery object with a UUID specific to your app, and a username specific to your device.
+ * The usersBlock is triggered periodically in order of users' proximity.
+ * The Discovery object starts both advertising and detecting.
  */
 - (instancetype)initWithUUID:(CBUUID *)uuid
                     username:(NSString *)username

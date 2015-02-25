@@ -11,11 +11,15 @@
 @interface Discovery()
 @property (nonatomic, copy) void (^usersBlock)(NSArray *users, BOOL usersChanged);
 @property (strong, nonatomic) NSTimer *timer;
+@property (nonatomic) BOOL shouldAdvertise;
+@property (nonatomic) BOOL shouldDetect;
 @end
 
 @implementation Discovery
+
 - (instancetype)initWithUUID:(CBUUID *)uuid
-                 username:(NSString *)username
+                    username:(NSString *)username
+                startOption:(DIStartOptions)startOption
                   usersBlock:(void (^)(NSArray *users, BOOL usersChanged))usersBlock {
     self = [super init];
     if(self) {
@@ -28,6 +32,8 @@
         _userTimeoutInterval = 3;
         _updateInterval = 2;
         
+
+
         // listen for UIApplicationDidEnterBackgroundNotification
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(appDidEnterBackground:)
@@ -47,12 +53,72 @@
         // start the central and peripheral managers
         self.queue = dispatch_queue_create("com.omerfarukgul.discovery", DISPATCH_QUEUE_SERIAL);
         
-        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:self.queue];
-        self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.queue];
+        _shouldAdvertise = NO;
+        _shouldDetect = NO;
         
-        [self startTimer];
+        switch (startOption) {
+            case DIStartAdvertisingAndDetecting:
+                self.shouldAdvertise = YES;
+                self.shouldDetect = YES;
+                break;
+            case DIStartAdvertisingOnly:
+                self.shouldAdvertise = YES;
+                break;
+            case DIStartDetectingOnly:
+                self.shouldDetect = YES;
+                break;
+            case DIStartNone:
+            default:
+                break;
+        }
+        
     }
     
+    return self;
+}
+
+-(void)setShouldAdvertise:(BOOL)shouldAdvertise {
+    if(_shouldAdvertise == shouldAdvertise)
+        return;
+    
+    _shouldAdvertise = shouldAdvertise;
+    
+    if(shouldAdvertise) {
+        if (!self.centralManager)
+            self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:self.queue];
+        if (!self.timer)
+            [self startTimer];
+    } else {
+        if (self.centralManager) {
+            [self.centralManager stopScan];
+            self.centralManager.delegate = nil;
+            self.centralManager = nil;
+        }
+        if (self.timer)
+            [self stopTimer];
+    }
+}
+
+-(void)setShouldDetect:(BOOL)shouldDetect {
+    if(_shouldDetect == shouldDetect)
+        return;
+    
+    _shouldDetect = shouldDetect;
+    
+    if(shouldDetect) {
+        if (!self.peripheralManager)
+            self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.queue];
+    } else {
+        if (self.peripheralManager) {
+            [self.peripheralManager stopAdvertising];
+            self.peripheralManager.delegate = nil;
+            self.peripheralManager = nil;
+        }
+    }
+}
+
+-(instancetype)initWithUUID:(CBUUID *)uuid username:(NSString *)username usersBlock:(void (^)(NSArray *, BOOL))usersBlock {
+    self = [self initWithUUID:uuid username:username startOption:DIStartAdvertisingAndDetecting usersBlock:usersBlock];
     return self;
 }
 
