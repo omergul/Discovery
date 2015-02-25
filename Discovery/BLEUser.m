@@ -8,13 +8,18 @@
 
 #import "BLEUser.h"
 
+@interface BLEUser ()
+@property (strong, nonatomic) EasedValue *easedProximity;
+@end
 
 @implementation BLEUser
 
-- (id)init {
+- (id)initWithPerpipheral:(CBPeripheral *)peripheral {
     self = [super init];
     if(self) {
-        self.easedProximity = [[EasedValue alloc] init];
+        _peripheral = peripheral;
+        _peripheralId = peripheral.identifier.UUIDString;
+        _easedProximity = [[EasedValue alloc] init];
     }
     
     return self;
