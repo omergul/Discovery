@@ -75,6 +75,11 @@
     return self;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
 -(void)setShouldAdvertise:(BOOL)shouldAdvertise {
     if(_shouldAdvertise == shouldAdvertise)
         return;
