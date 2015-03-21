@@ -12,11 +12,22 @@
 #import "EasedValue.h"
 
 @interface BLEUser : NSObject
-@property (strong, nonatomic) NSString *peripheralId;
-@property (strong, nonatomic) NSString *name;
+
+- (id)initWithPerpipheral:(CBPeripheral *)peripheral;
+
+@property (strong, nonatomic, readonly) CBPeripheral *peripheral;
+@property (strong, nonatomic, readonly) NSString *peripheralId;
+
+// the unique id for our user.
+@property (strong, nonatomic) NSString *username;
+// indicates wheather the user's username is extracted from the peer device.
+@property (nonatomic, getter=isIdentified) BOOL identified;
+
+// rssi
 @property (nonatomic) float rssi;
-@property (nonatomic) NSInteger proximity;
-@property (strong, nonatomic) EasedValue *easedProximity;
+// proximity calculated by EasedValue class.
+@property (nonatomic, readonly) NSInteger proximity;
+
+// the last seen time of the user
 @property (nonatomic) double updateTime;
-@property (strong, nonatomic) CBPeripheral *peripheral;
 @end
