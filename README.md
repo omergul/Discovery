@@ -4,12 +4,17 @@
 
 Discovery is a very simple but useful library for discovering nearby devices with BLE(Bluetooth Low Energy) and for exchanging a value (kind of ID or username determined by you on the running app on peer device) regardless of whether the app on peer device works at foreground or background state.
 
+## Version ##
+
 
 ###Discovery:###
 * lets you easily discover nearby devices
 * retrieve their id(assigned by you) while the app works on either foreground or background state
 * hides the nitty gritty details of BLE calls and delegates from the developer
 * determines the proximity of the peer device
+
+###Version 1.1:###
+* You can initialize Discovery either in only Detection or only Broadcasting mode. The default initializer will start the both.
 
 ## Example App ##
 
