@@ -90,6 +90,7 @@
 		17B568771A87864B007E0C5F = {
 			isa = PBXGroup;
 			children = (
+				9DC3B4FC1A9E0FCF00B1603B /* Discovery */,
 				17B568821A87864B007E0C5F /* DiscoveryExample */,
 				17B5689C1A87864B007E0C5F /* DiscoveryExampleTests */,
 				17B568811A87864B007E0C5F /* Products */,
@@ -113,7 +114,6 @@
 				17C70CB21A878EA200723200 /* Utils */,
 				17B568AD1A87885A007E0C5F /* Controllers */,
 				17B568871A87864B007E0C5F /* AppDelegate.h */,
-				9DC3B4FC1A9E0FCF00B1603B /* Discovery */,
 				17B568881A87864B007E0C5F /* AppDelegate.m */,
 				17B568901A87864B007E0C5F /* Images.xcassets */,
 				17B568921A87864B007E0C5F /* LaunchScreen.xib */,
@@ -255,7 +255,7 @@
 				TargetAttributes = {
 					17B5687F1A87864B007E0C5F = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = NZPAC7Q696;
+						DevelopmentTeam = 66SW7BQ2SM;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -264,6 +264,7 @@
 					};
 					17B568981A87864B007E0C5F = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = NZPAC7Q696;
 						TestTargetID = 17B5687F1A87864B007E0C5F;
 					};
 				};
@@ -471,6 +472,7 @@
 			baseConfigurationReference = 71F43AE6D94AF22307DB0267 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (KXAZT2UAP6)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -483,6 +485,7 @@
 			baseConfigurationReference = 332BDA49417653D9762F8158 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Omer Faruk Gul (NZPAC7Q696)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
