@@ -264,7 +264,7 @@
 					};
 					17B568981A87864B007E0C5F = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 66SW7BQ2SM;
+						DevelopmentTeam = NZPAC7Q696;
 						TestTargetID = 17B5687F1A87864B007E0C5F;
 					};
 				};
@@ -472,6 +472,7 @@
 			baseConfigurationReference = 71F43AE6D94AF22307DB0267 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (KXAZT2UAP6)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -484,6 +485,7 @@
 			baseConfigurationReference = 332BDA49417653D9762F8158 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Omer Faruk Gul (NZPAC7Q696)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
