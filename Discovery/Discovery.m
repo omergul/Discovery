@@ -46,30 +46,29 @@
         
         
         // we will hold the detected users here
-        self.usersMap = [NSMutableDictionary dictionary];
+        _usersMap = [NSMutableDictionary dictionary];
         
         // start the central and peripheral managers
-        self.queue = dispatch_queue_create("com.omerfarukgul.discovery", DISPATCH_QUEUE_SERIAL);
+        _queue = dispatch_queue_create("com.omerfarukgul.discovery", DISPATCH_QUEUE_SERIAL);
         
         _shouldAdvertise = NO;
         _shouldDiscover = NO;
         
         switch (startOption) {
             case DIStartAdvertisingAndDetecting:
-                self.shouldAdvertise = YES;
-                self.shouldDiscover = YES;
+                _shouldAdvertise = YES;
+                _shouldDiscover = YES;
                 break;
             case DIStartAdvertisingOnly:
-                self.shouldAdvertise = YES;
+                _shouldAdvertise = YES;
                 break;
             case DIStartDetectingOnly:
-                self.shouldDiscover = YES;
+                _shouldDiscover = YES;
                 break;
             case DIStartNone:
             default:
                 break;
         }
-        
     }
     
     return self;
