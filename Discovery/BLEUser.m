@@ -32,7 +32,7 @@
 
 - (NSInteger)convertRSSItoProximity:(NSInteger)rssi {
     // eased value doesn't support negative values
-    self.easedProximity.value = fabsf(rssi);
+    self.easedProximity.value = labs(rssi);
     [self.easedProximity update];
     NSInteger proximity = self.easedProximity.value * -1.0f;
     

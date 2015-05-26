@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, DIStartOptions) {
 
 @interface Discovery : NSObject<CBCentralManagerDelegate, CBPeripheralManagerDelegate, CBPeripheralDelegate>
 
+// disable the default initializer
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  * Initialize the Discovery object with a UUID specific to your app, and a username specific to your device.
