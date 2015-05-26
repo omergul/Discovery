@@ -27,7 +27,7 @@
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.username = username;
+        _username = username;
     }
     return self;
 }
