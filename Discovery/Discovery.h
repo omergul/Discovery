@@ -12,38 +12,38 @@
 #import <CoreLocation/CoreLocation.h>
 #import "BLEUser.h"
 
-/** Start options */
-typedef NS_ENUM(NSInteger, DIStartOptions) {
-    DIStartAdvertisingAndDetecting = 0,
-    DIStartAdvertisingOnly,
-    DIStartDetectingOnly,
-    DIStartNone
-};
-
 @interface Discovery : NSObject<CBCentralManagerDelegate, CBPeripheralManagerDelegate, CBPeripheralDelegate>
 
 // disable the default initializer
 - (instancetype)init NS_UNAVAILABLE;
 
 /**
- * Initialize the Discovery object with a UUID specific to your app, and a username specific to your device.
- * The usersBlock is triggered periodically in order of users' proximity.
- * The startOptions determine if the beacon should start advertising, broadcasting, both, or none.
+ * Initialize the Discovery object with a UUID specific to your app.
  */
-- (instancetype)initWithUUID:(CBUUID *)uuid
-                    username:(NSString *)username
-                startOption:(DIStartOptions)startOption
-                  usersBlock:(void (^)(NSArray *users, BOOL usersChanged))usersBlock;
-
+- (instancetype)initWithUUID:(CBUUID *)uuid;
 
 /**
- * Initialize the Discovery object with a UUID specific to your app, and a username specific to your device.
- * The usersBlock is triggered periodically in order of users' proximity.
- * The Discovery object starts both advertising and detecting.
+ * Username specific to your device.
+ **/
+- (void)startAdvertisingWithUsername:(NSString *)username;
+
+/**
+ * Stop advertising.
  */
-- (instancetype)initWithUUID:(CBUUID *)uuid
-                    username:(NSString *)username
-                  usersBlock:(void (^)(NSArray *users, BOOL usersChanged))usersBlock;
+- (void)stopAdvertising;
+
+/**
+ * The usersBlock is triggered periodically in order of users' proximity.
+ **/
+- (void)startDiscovering:(void (^)(NSArray *users, BOOL usersChanged))usersBlock;
+
+/**
+ * Stop discovering.
+ **/
+- (void)stopDiscovering;
+
+// ----------------- remove from interface ------------------
+- (void)startDetecting;
 
 /**
  * Returns the user user from our user dictionary according to its peripheralId.
@@ -53,8 +53,8 @@ typedef NS_ENUM(NSInteger, DIStartOptions) {
 /**
  * Changing these properties will start/stop advertising/discovery
  */
-@property (nonatomic) BOOL shouldAdvertise;
-@property (nonatomic) BOOL shouldDiscover;
+@property (nonatomic, getter=isAdvertising) BOOL shouldAdvertise;
+@property (nonatomic, getter=isDiscovering) BOOL shouldDiscover;
 
 /**
  * UUID is used for id as advertisement, peripheral services and characteristics.
@@ -75,18 +75,12 @@ typedef NS_ENUM(NSInteger, DIStartOptions) {
 @property (strong, nonatomic) CBCentralManager *centralManager;
 @property (strong, nonatomic) CBPeripheralManager *peripheralManager;
 
-/**
- * Set this to YES, if your app will disappear, or set to NO when it will appear.
- * You don't have to set YES when your app goes to background state, Discovery handles that.
- */
-@property (nonatomic, getter=isPaused) BOOL paused;
-
 /*
  * This dictionary holds all the discovered devices related to our UUID.
  * However it also contains the users that are NOT already identified.
  * We use periperal ID's as the keys.
  */
-@property (strong, nonatomic) NSMutableDictionary *usersMap;
+@property (strong, nonatomic, readonly) NSMutableDictionary *usersMap;
 
 /*
  * Discovery removes the users if can not re-see them after some amount of time, assuming the device-user is gone.

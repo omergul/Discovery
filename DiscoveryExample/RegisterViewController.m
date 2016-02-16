@@ -83,8 +83,7 @@
     [self.scrollView addSubview:self.usernameField];
     
     [self.usernameField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.scrollView);
-        make.width.equalTo(self.scrollView);
+        make.left.and.right.equalTo(self.view);
         make.height.equalTo(@70);
         make.top.equalTo(@10);
     }];

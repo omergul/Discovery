@@ -472,10 +472,11 @@
 			baseConfigurationReference = 71F43AE6D94AF22307DB0267 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (KXAZT2UAP6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.omerfarukgul.DiscoveryExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -485,10 +486,11 @@
 			baseConfigurationReference = 332BDA49417653D9762F8158 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Omer Faruk Gul (NZPAC7Q696)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
 				INFOPLIST_FILE = DiscoveryExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.omerfarukgul.DiscoveryExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -497,6 +499,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -508,6 +512,7 @@
 				INFOPLIST_FILE = DiscoveryExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoveryExample.app/DiscoveryExample";
 			};
 			name = Debug;
@@ -516,6 +521,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Omer Faruk Gul (2BS9BAM957)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -523,6 +530,7 @@
 				INFOPLIST_FILE = DiscoveryExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiscoveryExample.app/DiscoveryExample";
 			};
 			name = Release;

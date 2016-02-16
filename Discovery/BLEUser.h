@@ -3,7 +3,7 @@
 //  Discover
 //
 //  Created by Ömer Faruk Gül on 1/23/14.
-//  Copyright (c) 2014 Louvre Digital. All rights reserved.
+//  Copyright (c) 2014 Ömer Farul Gül. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

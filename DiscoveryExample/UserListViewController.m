@@ -70,12 +70,15 @@
     __weak typeof(self) weakSelf = self;
     
     // start Discovery
-    self.discovery = [[Discovery alloc] initWithUUID:uuid username:self.username usersBlock:^(NSArray *users, BOOL usersChanged) {
-        
-        NSLog(@"Updating table view with users count : %lu", (unsigned long)users.count);
+    self.discovery = [[Discovery alloc] initWithUUID:uuid];
+    [self.discovery startDiscovering:^(NSArray *users, BOOL usersChanged) {
         weakSelf.users = users;
         [weakSelf.tableView reloadData];
+        
+        NSLog(@"Discovering users: %lu", (unsigned long)users.count);
     }];
+    
+    [self.discovery startAdvertisingWithUsername:self.username];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -83,14 +86,8 @@
     
     // pause, (it will disable timer and top scanning, but it will continue advertising)
     // this is important, otherwise due to the active timers your VC may not be deallocated.
-    [self.discovery setPaused:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    // unpause, start timers and scanning
-    [self.discovery setPaused:NO];
+    [self.discovery stopDiscovering];
+    [self.discovery stopAdvertising];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
