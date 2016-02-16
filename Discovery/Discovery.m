@@ -11,27 +11,23 @@
 @interface Discovery()
 @property (nonatomic, copy) void (^usersBlock)(NSArray *users, BOOL usersChanged);
 @property (strong, nonatomic) NSTimer *timer;
+@property (nonatomic, getter=isInBackgroundMode) BOOL inBackgroundMode;
 @end
+
+static double bgStartTime = 0.0f;
 
 @implementation Discovery
 
-- (instancetype)initWithUUID:(CBUUID *)uuid
-                    username:(NSString *)username
-                startOption:(DIStartOptions)startOption
-                  usersBlock:(void (^)(NSArray *users, BOOL usersChanged))usersBlock {
+- (instancetype)initWithUUID:(CBUUID *)uuid {
     self = [super init];
     if(self) {
         _uuid = uuid;
-        _username = username;
-        _usersBlock = usersBlock;
         
-        _paused = NO;
+        _inBackgroundMode = NO;
         
         _userTimeoutInterval = 3;
         _updateInterval = 2;
         
-
-
         // listen for UIApplicationDidEnterBackgroundNotification
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(appDidEnterBackground:)
@@ -54,29 +50,39 @@
         _shouldAdvertise = NO;
         _shouldDiscover = NO;
         
-        switch (startOption) {
-            case DIStartAdvertisingAndDetecting:
-                _shouldAdvertise = YES;
-                _shouldDiscover = YES;
-                break;
-            case DIStartAdvertisingOnly:
-                _shouldAdvertise = YES;
-                break;
-            case DIStartDetectingOnly:
-                _shouldDiscover = YES;
-                break;
-            case DIStartNone:
-            default:
-                break;
-        }
+        
     }
     
     return self;
 }
 
+- (void)startAdvertisingWithUsername:(NSString *)username
+{
+    _username = username;
+    self.shouldAdvertise = YES;
+}
+
+- (void)stopAdvertising
+{
+    self.shouldAdvertise = NO;
+}
+
+- (void)startDiscovering:(void (^)(NSArray *users, BOOL usersChanged))usersBlock
+{
+    self.usersBlock = usersBlock;
+    self.shouldDiscover = YES;
+}
+
+- (void)stopDiscovering
+{
+    self.shouldDiscover = NO;
+}
+
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    NSLog(@"Discovery deallocated.");
 }
 
 -(void)setShouldAdvertise:(BOOL)shouldAdvertise {
@@ -95,8 +101,6 @@
             self.peripheralManager = nil;
         }
     }
-    
-    
 }
 
 -(void)setShouldDiscover:(BOOL)shouldDiscover {
@@ -121,12 +125,6 @@
     }
 }
 
--(instancetype)initWithUUID:(CBUUID *)uuid username:(NSString *)username usersBlock:(void (^)(NSArray *, BOOL))usersBlock {
-    self = [self initWithUUID:uuid username:username startOption:DIStartAdvertisingAndDetecting usersBlock:usersBlock];
-    return self;
-}
-
-
 - (void)startTimer {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:self.updateInterval target:self
                                                 selector:@selector(checkList) userInfo:nil repeats:YES];
@@ -145,28 +143,14 @@
     [self startTimer];
 }
 
-- (void)setPaused:(BOOL)paused {
-    
-    if(_paused == paused)
-        return;
-    
-    _paused = paused;
-    
-    if(paused) {
-        [self stopTimer];
-        [self.centralManager stopScan];
-    }
-    else {
-        [self startTimer];
-        [self startDetecting];
-    }
-}
-
 - (void)appDidEnterBackground:(NSNotification *)notification {
+    self.inBackgroundMode = YES;
+    bgStartTime = CFAbsoluteTimeGetCurrent();
     [self stopTimer];
 }
 
 - (void)appWillEnterForeground:(NSNotification *)notification {
+    self.inBackgroundMode = NO;
     [self startTimer];
 }
 
@@ -294,17 +278,22 @@
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    //NSLog(@"User is discovered: %@ %@ at %@", peripheral.name, peripheral.identifier, RSSI);
-    
     NSString *username = advertisementData[CBAdvertisementDataLocalNameKey];
-
-    //NSLog(@"Discovered name : %@", name);
+    //NSLog(@"Discovered: %@ %@ at %@ -- %@", peripheral.name, peripheral.identifier, RSSI, username);
+    
+    if(self.isInBackgroundMode) {
+        double bgTime = (CFAbsoluteTimeGetCurrent() - bgStartTime);
+        [[NSUserDefaults standardUserDefaults] setDouble:bgTime forKey:@"bgTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSLog(@"Bgtime : %f", bgTime);
+    }
     
     BLEUser *bleUser = [self userWithPeripheralId:peripheral.identifier.UUIDString];
     if(bleUser == nil) {
         //NSLog(@"Adding ble user: %@", name);
         bleUser = [[BLEUser alloc] initWithPerpipheral:peripheral];
         bleUser.username = nil;
+        
         bleUser.identified = NO;
         bleUser.peripheral.delegate = self;
         
